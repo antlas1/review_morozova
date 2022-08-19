@@ -13,6 +13,7 @@ namespace Svg {
 
     struct Point {
         Point() : x(0.0), y(0.0) {}
+        //TODO: можно лучше - более информативные имена переменным, ix,iy - сбивают с толку
         Point(double ix, double iy) : x(ix), y(iy) {}
         double x;
         double y;
@@ -25,7 +26,8 @@ namespace Svg {
         uint8_t green;
         uint8_t blue;
     };
-
+    
+    //TODO: можно лучше, убрать дублирование компонентов RGB
     struct Rgba {
         Rgba() : red(0), green(0), blue(0), alpha(0.0) {}
         Rgba(uint8_t r, uint8_t g, uint8_t b, double a) : red(r), green(g), blue(b), alpha(a) {}
@@ -42,6 +44,7 @@ namespace Svg {
         Color(const std::string& str) : color_(str) {}
         Color(const Rgb& icolor) : color_(icolor) {}
         Color(const Rgba& icolor) : color_(icolor) {}
+        //TODO: можно лучше, убрать дублирование вывода компонентов цвета для RGB, RGBA
         friend std::ostream& operator<<(std::ostream& o, const Color& col) {
             if (std::holds_alternative<std::string>(col.color_)) {
                 o << std::get<std::string>(col.color_);

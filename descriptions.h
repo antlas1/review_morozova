@@ -13,7 +13,7 @@ namespace Descriptions {
     std::string name;
     Sphere::Point position;
     std::unordered_map<std::string, int> distances;
-
+    //Можно лучше: незачем использовать статическую фабричную функцию для структуры с открытыми полями
     static Stop ParseFrom(const Json::Dict& attrs);
   };
 
@@ -25,7 +25,7 @@ namespace Descriptions {
     std::string name;
     std::vector<std::string> stops;
     bool is_roundtrip;
-
+    //Можно лучше: тоже самое что выше
     static Bus ParseFrom(const Json::Dict& attrs);
   };
 

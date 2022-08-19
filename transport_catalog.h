@@ -46,11 +46,13 @@ public:
   std::string RenderMapDebug() const;
 
 private:
+  //Можно лучше: необязательное использование статического метода
   static int ComputeRoadRouteLength(
       const std::vector<std::string>& stops,
       const Descriptions::StopsDict& stops_dict
   );
 
+  //Можно лучше: необязательное использование статического метода
   static double ComputeGeoRouteDistance(
       const std::vector<std::string>& stops,
       const Descriptions::StopsDict& stops_dict

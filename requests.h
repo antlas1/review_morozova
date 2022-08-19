@@ -10,11 +10,13 @@
 namespace Requests {
   struct Stop {
     std::string name;
+    //Можно лучше: process оперерует с открытыми полями структуры, можно вытащить вне класса
     Json::Dict Process(const TransportCatalog& db) const;
   };
 
   struct Bus {
     std::string name;
+    //Можно лучше: тоже самое и ниже
     Json::Dict Process(const TransportCatalog& db) const;
   };
 

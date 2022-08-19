@@ -51,8 +51,10 @@ private:
 		bool is_roundtrip;
 	};
 
+    //Не надо делать статическим методом, от членов класса, не зависит, уменьшить область видимости или даже перенести
 	static RenderSettings MakeRenderSettings(const Json::Dict& json);
-	static Svg::Color GetColorFromNode(const Json::Node& node);
+	//тоже самое
+    static Svg::Color GetColorFromNode(const Json::Node& node);
 	void CalculateRelativeCoordinates(double min_lat, double max_lat, double min_lon, double max_lon);
 	void PrintBusLine();
 	void PrintBusLabels();
