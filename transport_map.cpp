@@ -1,6 +1,6 @@
 #include "transport_map.h"
 
-//Что за штучка?
+//Р§С‚Рѕ Р·Р° С€С‚СѓС‡РєР°?
 void Foo() {
 
 }
@@ -14,7 +14,7 @@ TransportMap::TransportMap(const Descriptions::StopsDict& stops_dict,
                      , {"stop_points", std::bind(&TransportMap::PrintStopPoints, this)}
                      , {"stop_labels", std::bind(&TransportMap::PrintStopLabels, this)} }) {
 
-    //Можно лучше: инициализация переменных в отдельной строке
+    //РњРѕР¶РЅРѕ Р»СѓС‡С€Рµ: РёРЅРёС†РёР°Р»РёР·Р°С†РёСЏ РїРµСЂРµРјРµРЅРЅС‹С… РІ РѕС‚РґРµР»СЊРЅРѕР№ СЃС‚СЂРѕРєРµ
     double min_lat = 100.0, max_lat = 0.0, min_lon = 100.0, max_lon = 0.0;
     for (const auto& [stop_name, stop_pointer] : stops_dict) {
         min_lat = std::min(min_lat, stop_pointer->position.latitude);
@@ -29,7 +29,7 @@ TransportMap::TransportMap(const Descriptions::StopsDict& stops_dict,
     }
 
     CalculateRelativeCoordinates(min_lat, max_lat, min_lon, max_lon);
-    //Можно лучше: слишком маленькая процедура, лучше встроить код сюда
+    //РњРѕР¶РЅРѕ Р»СѓС‡С€Рµ: СЃР»РёС€РєРѕРј РјР°Р»РµРЅСЊРєР°СЏ РїСЂРѕС†РµРґСѓСЂР°, Р»СѓС‡С€Рµ РІСЃС‚СЂРѕРёС‚СЊ РєРѕРґ СЃСЋРґР°
     CreateMap();
 }
 
@@ -38,7 +38,7 @@ Svg::Color TransportMap::GetColorFromNode(const Json::Node& node) {
     Svg::Color col;
     if (std::holds_alternative<std::vector<Json::Node>>(node)) {
         const auto& ar = node.AsArray();
-        //Можно лучше: по размеру массива не очень хорошо определять тип цвета
+        //РњРѕР¶РЅРѕ Р»СѓС‡С€Рµ: РїРѕ СЂР°Р·РјРµСЂСѓ РјР°СЃСЃРёРІР° РЅРµ РѕС‡РµРЅСЊ С…РѕСЂРѕС€Рѕ РѕРїСЂРµРґРµР»СЏС‚СЊ С‚РёРї С†РІРµС‚Р°
         if (ar.size() == 3) {
             col = Svg::Color(Svg::Rgb(ar[0].AsInt(), ar[1].AsInt(), ar[2].AsInt()));
         }
@@ -50,7 +50,7 @@ Svg::Color TransportMap::GetColorFromNode(const Json::Node& node) {
         col = Svg::Color(node.AsString());
     }
     else {
-        //проверьте наличие блока catch для выбрасывания исключений
+        //РїСЂРѕРІРµСЂСЊС‚Рµ РЅР°Р»РёС‡РёРµ Р±Р»РѕРєР° catch РґР»СЏ РІС‹Р±СЂР°СЃС‹РІР°РЅРёСЏ РёСЃРєР»СЋС‡РµРЅРёР№
         throw std::runtime_error("Unknown color");
     }
     return col;
@@ -58,7 +58,7 @@ Svg::Color TransportMap::GetColorFromNode(const Json::Node& node) {
 
 TransportMap::RenderSettings TransportMap::MakeRenderSettings(const Json::Dict& json) {
 
-    //Можно лучше: надо упростить создание такого многострочного объекта, тяжело для понимания
+    //РњРѕР¶РЅРѕ Р»СѓС‡С€Рµ: РЅР°РґРѕ СѓРїСЂРѕСЃС‚РёС‚СЊ СЃРѕР·РґР°РЅРёРµ С‚Р°РєРѕРіРѕ РјРЅРѕРіРѕСЃС‚СЂРѕС‡РЅРѕРіРѕ РѕР±СЉРµРєС‚Р°, С‚СЏР¶РµР»Рѕ РґР»СЏ РїРѕРЅРёРјР°РЅРёСЏ
     return {
         .width = json.at("width").AsDouble(),
         .height = json.at("height").AsDouble(),
@@ -66,7 +66,7 @@ TransportMap::RenderSettings TransportMap::MakeRenderSettings(const Json::Dict& 
         .stop_radius = json.at("stop_radius").AsDouble(),
         .line_width = json.at("line_width").AsDouble(),
         .stop_label_font_size = json.at("stop_label_font_size").AsInt(),
-        //Не проверяется размер массива - AsArray
+        //РќРµ РїСЂРѕРІРµСЂСЏРµС‚СЃСЏ СЂР°Р·РјРµСЂ РјР°СЃСЃРёРІР° - AsArray
         .stop_label_offset = {json.at("stop_label_offset").AsArray()[0].AsDouble(),
                            json.at("stop_label_offset").AsArray()[1].AsDouble()},
         .underlayer_color = GetColorFromNode(json.at("underlayer_color")),
@@ -91,7 +91,7 @@ TransportMap::RenderSettings TransportMap::MakeRenderSettings(const Json::Dict& 
 }
 
 void TransportMap::CalculateRelativeCoordinates(double min_lat, double max_lat, double min_lon, double max_lon) {
-    //TODO: нельзя сравнивать с 0 разницу double, надо воспользоваться относительным или абсолютным порогом
+    //TODO: РЅРµР»СЊР·СЏ СЃСЂР°РІРЅРёРІР°С‚СЊ СЃ 0 СЂР°Р·РЅРёС†Сѓ double, РЅР°РґРѕ РІРѕСЃРїРѕР»СЊР·РѕРІР°С‚СЊСЃСЏ РѕС‚РЅРѕСЃРёС‚РµР»СЊРЅС‹Рј РёР»Рё Р°Р±СЃРѕР»СЋС‚РЅС‹Рј РїРѕСЂРѕРіРѕРј
     double width_zoom_coef = (max_lon - min_lon == 0) ? std::numeric_limits<double>::max() :
         (render_settings_.width - 2 * render_settings_.padding) / (max_lon - min_lon);
     double height_zoom_coef = (max_lat - min_lat == 0) ? std::numeric_limits<double>::max() :
@@ -110,7 +110,7 @@ void TransportMap::CalculateRelativeCoordinates(double min_lat, double max_lat, 
 
 void TransportMap::PrintBusLine() {
 
-    // 0. Маршруты автобусов.
+    // 0. РњР°СЂС€СЂСѓС‚С‹ Р°РІС‚РѕР±СѓСЃРѕРІ.
     size_t cnt = 0;
     for (const auto& [bus_name, bus_param] : buses_) {
         Svg::Polyline bus_route;
@@ -122,7 +122,7 @@ void TransportMap::PrintBusLine() {
         for (const auto& bus_stop_name : bus_param.stops) {
             bus_route.AddPoint(stops_.at(bus_stop_name).out_coordinates);
         }
-        //для std::move должна быть семантика rvalue, проверьте Document
+        //РґР»СЏ std::move РґРѕР»Р¶РЅР° Р±С‹С‚СЊ СЃРµРјР°РЅС‚РёРєР° rvalue, РїСЂРѕРІРµСЂСЊС‚Рµ Document
         map_.Add(std::move(bus_route));
         cnt++;
     }
@@ -130,7 +130,7 @@ void TransportMap::PrintBusLine() {
 }
 void TransportMap::PrintBusLabels() {
 
-    // 1. Номера автобусов
+    // 1. РќРѕРјРµСЂР° Р°РІС‚РѕР±СѓСЃРѕРІ
     size_t cnt = 0;
     for (const auto& [bus_name, bus_param] : buses_) {
         Svg::Text bus_name_pdl;
@@ -155,7 +155,7 @@ void TransportMap::PrintBusLabels() {
         map_.Add(bus_name_pdl);
         map_.Add(bus_name_txt);
 
-        //Можно лучше: добавить комментарий с описанием назначения блока
+        //РњРѕР¶РЅРѕ Р»СѓС‡С€Рµ: РґРѕР±Р°РІРёС‚СЊ РєРѕРјРјРµРЅС‚Р°СЂРёР№ СЃ РѕРїРёСЃР°РЅРёРµРј РЅР°Р·РЅР°С‡РµРЅРёСЏ Р±Р»РѕРєР°
         size_t middle_index = bus_param.stops.size() / 2;
         if ((!bus_param.is_roundtrip) && (bus_param.stops.front() != bus_param.stops[middle_index])) {
             bus_name_pdl.SetPoint(stops_[bus_param.stops[middle_index]].out_coordinates);
@@ -169,8 +169,8 @@ void TransportMap::PrintBusLabels() {
 }
 
 void TransportMap::PrintStopPoints() {
-    //Можно лучше: комментарий очевидный
-    // 2. Круги автобусных остановок
+    //РњРѕР¶РЅРѕ Р»СѓС‡С€Рµ: РєРѕРјРјРµРЅС‚Р°СЂРёР№ РѕС‡РµРІРёРґРЅС‹Р№
+    // 2. РљСЂСѓРіРё Р°РІС‚РѕР±СѓСЃРЅС‹С… РѕСЃС‚Р°РЅРѕРІРѕРє
     for (const auto& [stop_name, stop_param] : stops_) {
         Svg::Circle stop_circle;
         stop_circle.SetRadius(render_settings_.stop_radius);
@@ -180,10 +180,10 @@ void TransportMap::PrintStopPoints() {
     }
 }
 void TransportMap::PrintStopLabels() {
-    //Можно лучше: комментарий очевидный
-    // 3. Названия автобусных остановок
+    //РњРѕР¶РЅРѕ Р»СѓС‡С€Рµ: РєРѕРјРјРµРЅС‚Р°СЂРёР№ РѕС‡РµРІРёРґРЅС‹Р№
+    // 3. РќР°Р·РІР°РЅРёСЏ Р°РІС‚РѕР±СѓСЃРЅС‹С… РѕСЃС‚Р°РЅРѕРІРѕРє
     for (const auto& [stop_name, stop_param] : stops_) {
-        //нельзя использовать транслитерацию
+        //РЅРµР»СЊР·СЏ РёСЃРїРѕР»СЊР·РѕРІР°С‚СЊ С‚СЂР°РЅСЃР»РёС‚РµСЂР°С†РёСЋ
         Svg::Text nadpis;
         nadpis.SetPoint(stop_param.out_coordinates);
         nadpis.SetOffset(render_settings_.stop_label_offset);
@@ -191,7 +191,7 @@ void TransportMap::PrintStopLabels() {
         nadpis.SetFontFamily("Verdana");
         nadpis.SetData(stop_name);
 
-        //нельзя использовать транслитерацию
+        //РЅРµР»СЊР·СЏ РёСЃРїРѕР»СЊР·РѕРІР°С‚СЊ С‚СЂР°РЅСЃР»РёС‚РµСЂР°С†РёСЋ
         auto podlozhka = nadpis;
         podlozhka.SetFillColor(render_settings_.underlayer_color);
         podlozhka.SetStrokeColor(render_settings_.underlayer_color);
