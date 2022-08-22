@@ -77,7 +77,8 @@ namespace Json {
 
     if (c == '[') {
       return LoadArray(input);
-    } else if (c == '{') {
+    } else if (c == '{') { 
+      //Марина : как рекомендация - если в успешной ветке покидаете метода по ретерн или выбросу исключения, то можно не организовывать ветку елсе, просто след. проверка
       return LoadDict(input);
     } else if (c == '"') {
       return LoadString(input);
@@ -108,6 +109,7 @@ namespace Json {
   void PrintValue<std::vector<Node>>(const std::vector<Node>& nodes, std::ostream& output) {
     output << '[';
     bool first = true;
+    //Марина : логические переменные: где-то читала про то, что их лучше именовать начиная с is_ или has_
     for (const Node& node : nodes) {
       if (!first) {
         output << ", ";
