@@ -43,7 +43,7 @@ public:
   std::optional<TransportRouter::RouteInfo> FindRoute(const std::string& stop_from, const std::string& stop_to) const;
 
   std::string RenderMap() const;
-  std::string RenderMapDebug() const;
+  std::string RenderMapDebug() const;//Марина: а зачем здесь некая дебаг-реализация
 
 private:
   //Можно лучше: необязательное использование статического метода
